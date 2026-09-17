@@ -81,17 +81,8 @@ export function DropEntry() {
   return (
     <main className={`drop-entry phase-${phase} ${booted ? "booted" : ""}`} ref={root} aria-label="Kurukafa giriş sahnesi. Kayıt ekranına ulaşmak için aşağı kaydırın.">
       {loaderVisible && <section className={`boot-screen ${booted ? "boot-screen-exit" : ""}`} aria-label="HTLL sistemi yükleniyor" aria-live="polite">
-        <div className="boot-window">
-          <div className="boot-titlebar"><span>HTLL_DOWNLOAD_MANAGER.EXE</span><span className="boot-window-actions">— □ ×</span></div>
-          <div className="boot-content">
-            <div className="boot-heading"><div>Downloading...</div><strong>{String(loadProgress).padStart(2, "0")}%</strong></div>
-            <div className="boot-progress" role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={loadProgress}>
-              {Array.from({ length: 28 }, (_, index) => <span key={index} className={index < Math.ceil(loadProgress / 100 * 28) ? "filled" : ""} />)}
-            </div>
-            <div className="boot-rate"><span>TRANSFERRING: HTLL_DROP_001 / ENCRYPTED</span><span>RATE: {Math.max(12, Math.round((loadProgress + 8) * 1.7))} KB/S</span></div>
-            <div className="boot-details"><div><small>FILE</small><span>SKULL_ACCESS_GATE</span></div><div><small>STATUS</small><span>{loadProgress < 100 ? "BUFFERING" : "READY"}</span></div><div><small>ETA</small><span>{loadProgress < 100 ? `00:0${Math.max(0, Math.ceil((100 - loadProgress) / 40))}` : "00:00"}</span></div></div>
-          </div>
-          <div className="boot-statusbar"><span>HT/LL NETWORK</span><span>PLEASE WAIT</span></div>
+        <div className="simple-loader" role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={loadProgress}>
+          <span style={{ width: `${loadProgress}%` }} />
         </div>
       </section>}
       <div className="entry-stage">
