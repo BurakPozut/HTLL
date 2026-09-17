@@ -30,6 +30,8 @@ export function DropEntry() {
         frame = requestAnimationFrame(tick);
         return;
       }
+      document.body.classList.remove("booting");
+      document.body.style.overflow = "";
       setBooted(true);
       exitTimer = window.setTimeout(() => setLoaderVisible(false), reduced.matches ? 120 : 620);
     };
@@ -77,13 +79,8 @@ export function DropEntry() {
     return () => { cancelAnimationFrame(frame); window.removeEventListener("scroll", update); window.removeEventListener("resize", measure); };
   }, []);
   return (
-    <main className={`drop-entry phase-${phase}`} ref={root} aria-label="Kurukafa giriş sahnesi. Kayıt ekranına ulaşmak için aşağı kaydırın.">
+    <main className={`drop-entry phase-${phase} ${booted ? "booted" : ""}`} ref={root} aria-label="Kurukafa giriş sahnesi. Kayıt ekranına ulaşmak için aşağı kaydırın.">
       {loaderVisible && <section className={`boot-screen ${booted ? "boot-screen-exit" : ""}`} aria-label="HTLL sistemi yükleniyor" aria-live="polite">
-        <div className="boot-grid" aria-hidden="true" />
-        <div className="boot-corner boot-corner-tl">HT/LL_BOOT<br />NODE 001 / ISTANBUL</div>
-        <div className="boot-corner boot-corner-tr">SECURE CHANNEL<br />ENCRYPTED</div>
-        <div className="boot-corner boot-corner-bl">SIGNAL: <span>ACTIVE</span><br />MEMORY CHECK: OK</div>
-        <div className="boot-corner boot-corner-br">DROP_001<br />PRE-RELEASE SYSTEM</div>
         <div className="boot-window">
           <div className="boot-titlebar"><span>HTLL_DOWNLOAD_MANAGER.EXE</span><span className="boot-window-actions">— □ ×</span></div>
           <div className="boot-content">
@@ -96,7 +93,6 @@ export function DropEntry() {
           </div>
           <div className="boot-statusbar"><span>HT/LL NETWORK</span><span>PLEASE WAIT</span></div>
         </div>
-        <div className="boot-prompt">INITIALIZING ACCESS GATE<span className="boot-cursor">_</span></div>
       </section>}
       <div className="entry-stage">
         <BinarySkull progress={progress} />
