@@ -5,20 +5,50 @@ import "./drop-entry.css";
 import { BinarySkull } from "./binary-skull";
 
 const clamp = (n: number) => Math.max(0, Math.min(1, n));
-const smooth = (n: number) => { const v = clamp(n); return v * v * (3 - 2 * v); };
 
 export function DropEntry() {
   const root = useRef<HTMLElement>(null);
   const progress = useRef(0);
   const [phase, setPhase] = useState(0);
   const [notice, setNotice] = useState("");
+  const [loadProgress, setLoadProgress] = useState(0);
+  const [loaderVisible, setLoaderVisible] = useState(true);
+  const [booted, setBooted] = useState(false);
+
+  useEffect(() => {
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const duration = reduced.matches ? 500 : 2400;
+    const startedAt = performance.now();
+    let frame = 0;
+    let exitTimer = 0;
+
+    const tick = (now: number) => {
+      const raw = Math.min(1, (now - startedAt) / duration);
+      const eased = 1 - Math.pow(1 - raw, 3);
+      setLoadProgress(Math.round(eased * 100));
+      if (raw < 1) {
+        frame = requestAnimationFrame(tick);
+        return;
+      }
+      setBooted(true);
+      exitTimer = window.setTimeout(() => setLoaderVisible(false), reduced.matches ? 120 : 620);
+    };
+
+    frame = requestAnimationFrame(tick);
+    document.body.classList.add("booting");
+    document.body.style.overflow = "hidden";
+    return () => {
+      cancelAnimationFrame(frame);
+      window.clearTimeout(exitTimer);
+      document.body.classList.remove("booting");
+      document.body.style.overflow = "";
+    };
+  }, []);
   useEffect(() => {
     const section = root.current;
     if (!section) return;
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
     let frame = 0, current = 0, target = 0, start = 0, distance = 1, lastPhase = -1;
-    const intro = section.querySelector<HTMLElement>(".entry-heading")!;
-    const coordinate = section.querySelector<HTMLElement>(".entry-coordinate")!;
     let lastTime = 0;
     const paint = (time: number) => {
       const delta = Math.min(64, time - (lastTime || time - 16));
@@ -27,7 +57,6 @@ export function DropEntry() {
       if (Math.abs(target - current) < .00015) current = target;
       const p = current;
       progress.current = p;
-      intro.style.opacity = coordinate.style.opacity = String(1 - smooth(p / .23));
       const phase = p >= .89 ? 3 : p > .55 ? 2 : p > .12 ? 1 : 0;
       if (phase !== lastPhase) { lastPhase = phase; setPhase(phase); }
       frame = current !== target ? requestAnimationFrame(paint) : 0;
@@ -47,25 +76,35 @@ export function DropEntry() {
     window.addEventListener("resize", measure);
     return () => { cancelAnimationFrame(frame); window.removeEventListener("scroll", update); window.removeEventListener("resize", measure); };
   }, []);
-  const skip = () => {
-    const section = root.current;
-    if (section) window.scrollTo({ top: window.scrollY + section.getBoundingClientRect().top + section.offsetHeight - window.innerHeight, behavior: "instant" });
-  };
   return (
-    <main className={`drop-entry phase-${phase}`} ref={root}>
+    <main className={`drop-entry phase-${phase}`} ref={root} aria-label="Kurukafa giriş sahnesi. Kayıt ekranına ulaşmak için aşağı kaydırın.">
+      {loaderVisible && <section className={`boot-screen ${booted ? "boot-screen-exit" : ""}`} aria-label="HTLL sistemi yükleniyor" aria-live="polite">
+        <div className="boot-grid" aria-hidden="true" />
+        <div className="boot-corner boot-corner-tl">HT/LL_BOOT<br />NODE 001 / ISTANBUL</div>
+        <div className="boot-corner boot-corner-tr">SECURE CHANNEL<br />ENCRYPTED</div>
+        <div className="boot-corner boot-corner-bl">SIGNAL: <span>ACTIVE</span><br />MEMORY CHECK: OK</div>
+        <div className="boot-corner boot-corner-br">DROP_001<br />PRE-RELEASE SYSTEM</div>
+        <div className="boot-window">
+          <div className="boot-titlebar"><span>HTLL_DOWNLOAD_MANAGER.EXE</span><span className="boot-window-actions">— □ ×</span></div>
+          <div className="boot-content">
+            <div className="boot-heading"><div>Downloading...</div><strong>{String(loadProgress).padStart(2, "0")}%</strong></div>
+            <div className="boot-progress" role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={loadProgress}>
+              {Array.from({ length: 28 }, (_, index) => <span key={index} className={index < Math.ceil(loadProgress / 100 * 28) ? "filled" : ""} />)}
+            </div>
+            <div className="boot-rate"><span>TRANSFERRING: HTLL_DROP_001 / ENCRYPTED</span><span>RATE: {Math.max(12, Math.round((loadProgress + 8) * 1.7))} KB/S</span></div>
+            <div className="boot-details"><div><small>FILE</small><span>SKULL_ACCESS_GATE</span></div><div><small>STATUS</small><span>{loadProgress < 100 ? "BUFFERING" : "READY"}</span></div><div><small>ETA</small><span>{loadProgress < 100 ? `00:0${Math.max(0, Math.ceil((100 - loadProgress) / 40))}` : "00:00"}</span></div></div>
+          </div>
+          <div className="boot-statusbar"><span>HT/LL NETWORK</span><span>PLEASE WAIT</span></div>
+        </div>
+        <div className="boot-prompt">INITIALIZING ACCESS GATE<span className="boot-cursor">_</span></div>
+      </section>}
       <div className="entry-stage">
         <BinarySkull progress={progress} />
-        <div className="code-rain" aria-hidden="true">{Array.from({ length: 10 }, (_, i) => <span key={i} style={{ left: `${i * 11}%`, animationDelay: `${-i * 2}s` }}>01001101<br />00110110<br />11001001</span>)}</div>
-        <div className="entry-grain" aria-hidden="true" />
-        <header className="entry-header">
-          <a href="#" className="entry-brand" aria-label="High Tech Low Life">HT<span>/</span>LL<span className="brand-dot">®</span></a>
-          <span className="entry-edition">INDEPENDENT SYSTEMS<br />ISTANBUL · EST. 2026</span>
-          <button className="entry-skip" onClick={skip}>KAYDA GEÇ <span>↗</span></button>
-        </header>
-        <div className="entry-heading"><p>TRANSMISSION 001 / ACCESS RESTRICTED</p><h1>HIGH TECH<br /><span>LOW LIFE.</span></h1></div>
-        <div className="entry-coordinate" aria-hidden="true">SYS. HTLL_001<br />41°00′ N / 28°58′ E<br /><span>● SIGNAL ACTIVE</span></div>
-        {phase < 3 && <div className="entry-scroll"><span>{phase === 0 ? "SCROLL TO ENTER" : phase === 1 ? "OPENING THE GATE" : "ENTER THE VOID"}</span><div /><span className="scroll-arrow">↓</span></div>}
-        <div className="entry-footer"><span>NOT FOR EVERYONE.</span><span>DROP 001 — COMING SOON</span><span>© HT/LL STUDIOS</span></div>
+        <div className="entry-symbol" role="img" aria-label="High Tech Low Life">
+          <span className="symbol-base" />
+          <span className="symbol-glitch symbol-glitch-a" aria-hidden="true" />
+          <span className="symbol-glitch symbol-glitch-b" aria-hidden="true" />
+        </div>
         {phase === 3 && <section className="entry-access" aria-label="Drop bildirim formu">
           <div className="window-echo echo-one" aria-hidden="true"><div>System Error — HT/LL</div></div>
           <div className="window-echo echo-two" aria-hidden="true"><div>Connection interrupted</div></div>
