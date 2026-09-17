@@ -11,6 +11,24 @@ export function DropEntry() {
   const progress = useRef(0);
   const [phase, setPhase] = useState(0);
   const [notice, setNotice] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const [subscribed, setSubscribed] = useState(false);
+  async function subscribe(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (submitting || subscribed) return;
+    const values = new FormData(event.currentTarget);
+    setSubmitting(true); setNotice("");
+    try {
+      const response = await fetch("/api/subscribe", {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: values.get("email"), phone: values.get("phone"), consent: values.get("consent") === "on", website: values.get("website") }),
+      });
+      const data = await response.json();
+      if (!response.ok || !data.ok) throw new Error(data.error || "Kayıt tamamlanamadı.");
+      setSubscribed(true); setNotice("Listedesin. Drop açıldığında haber vereceğiz.");
+    } catch (error) { setNotice(error instanceof Error ? error.message : "Bağlantı kurulamadı. Tekrar dene."); }
+    finally { setSubmitting(false); }
+  }
   const [loadProgress, setLoadProgress] = useState(0);
   const [loaderVisible, setLoaderVisible] = useState(true);
   const [booted, setBooted] = useState(false);
@@ -99,11 +117,14 @@ export function DropEntry() {
             <div className="retro-title"><span>System Access — HT/LL</span><button aria-label="Giriş sahnesine dön" onClick={() => window.scrollTo({ top: 0, behavior: "instant" })}>×</button></div>
             <div className="retro-content">
               <div className="retro-message"><span className="warning-symbol" aria-hidden="true">⚠</span><div><h2>You are early.</h2><p>Drop 001 henüz açılmadı.<br />Sinyali ilk alanlardan ol.</p></div></div>
-              <form onSubmit={(event) => { event.preventDefault(); setNotice("Bu bir ön izleme. Kayıt bağlantısı henüz aktif değil; bilgilerin gönderilmedi."); }}>
+              <form onSubmit={subscribe}>
+                <fieldset disabled={submitting || subscribed} className="registration-fields">
                 <label htmlFor="entry-email">E-posta adresi<input id="entry-email" type="email" name="email" autoComplete="email" placeholder="you@underground.net" required /></label>
                 <label htmlFor="entry-phone">Telefon numarası <span>(isteğe bağlı)</span><input id="entry-phone" type="tel" name="phone" autoComplete="tel" placeholder="+90" /></label>
-                <p className="preview-note">ÖN İZLEME / KAYIT HENÜZ AKTİF DEĞİL</p>
-                <div className="retro-actions"><button type="submit">Erişim iste ↵</button></div>
+                <div className="registration-trap" aria-hidden="true"><label>Website<input name="website" tabIndex={-1} autoComplete="off" /></label></div>
+                <label className="registration-consent"><input type="checkbox" name="consent" required /><span>HTLL’nin drop açılışı hakkında e-posta ve paylaşırsam telefon yoluyla bana haber vermesini istiyorum.</span></label>
+                <div className="retro-actions"><button type="submit">{subscribed ? "Listedesin ✓" : submitting ? "Kaydediliyor…" : "Erişim iste ↵"}</button></div>
+                </fieldset>
                 <p className="entry-notice" role="status">{notice}</p>
               </form>
             </div>
