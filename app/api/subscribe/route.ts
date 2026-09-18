@@ -1,7 +1,6 @@
-import { getDb } from "../../../db";
-import { subscribers } from "../../../db/schema";
 import { apiError, HttpError, json, limitRequest, readBody } from "../../lib/admin-server";
 import { CONSENT_VERSION, validateRegistration } from "../../lib/registration";
+import { createSubscriber } from "../../lib/supabase-server";
 
 export async function POST(request: Request) {
   try {
@@ -12,7 +11,7 @@ export async function POST(request: Request) {
     try { values = validateRegistration(body); }
     catch (error) { throw new HttpError(400, error instanceof Error ? error.message : "Bilgileri kontrol et."); }
     // Repeat submissions cannot overwrite a phone number belonging to an existing email.
-    await getDb().insert(subscribers).values({ ...values, createdAt: Date.now(), consentVersion: CONSENT_VERSION }).onConflictDoNothing({ target: subscribers.email });
+    await createSubscriber({ ...values, consentVersion: CONSENT_VERSION });
     return json({ ok: true });
   } catch (error) { return apiError(error); }
 }

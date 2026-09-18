@@ -1,9 +1,13 @@
 # Drop kayıtları
 
-`/api/subscribe` formu Cloudflare D1 üzerindeki `subscribers` tablosuna kaydeder.
+`/api/subscribe` formu Supabase üzerindeki `subscribers` tablosuna kaydeder.
 Telefon isteğe bağlıdır. E-posta küçük harfe çevrilir ve tekildir; tekrar gönderim
 mevcut kayıt bilgilerini değiştirmez. Bildirim izni sürümü ve UTC kayıt zamanı tutulur.
 Bu bir müşteri hesabı oluşturmaz ve e-posta/SMS göndermez.
+
+Cloudflare Worker üzerinde `SUPABASE_URL` ve `SUPABASE_SECRET_KEY` secret'ları
+tanımlanmalıdır. Secret key tarayıcıya gönderilmez ve Git'e eklenmez. D1 yalnızca
+yönetici oturumları ile istek limitlerini saklamak için kullanılmaya devam eder.
 
 ## Yerel kurulum
 
@@ -15,14 +19,17 @@ Bu bir müşteri hesabı oluşturmaz ve e-posta/SMS göndermez.
 4. `/admin` adresinden giriş yap. Arama, 50 kayıtlık sayfalama ve filtrelenmiş CSV
    indirme bulunur. CSV tek seferde en fazla 10.000 kayıt indirir.
 
-Yerel kayıtlar `.wrangler/state` altında saklanır ve sunucu yeniden başlasa da kalır.
-Bu klasörü silmek yerel verileri siler. Bunlar internetteki canlı veritabanına
-otomatik aktarılmaz. `npm run db:generate` tablo değişiklikleri için yeni migration üretir.
+Yerel yönetici oturumları ve istek limitleri `.wrangler/state` altında saklanır.
+Waitlist kayıtları, yerel geliştirmede de yapılandırdığınız Supabase projesine yazılır.
+Canlı verileri etkilememek için geliştirme ve üretim için ayrı Supabase projeleri kullanın.
 
 ## Canlıya geçiş
 
-- `.openai/hosting.json` D1 binding adı `DB` olarak tanımlıdır. Hosting ortamında gerçek
-  D1 veritabanı bağlanmalı ve `drizzle/` SQL migration dosyaları uygulanmalıdır.
+- D1 binding adı `DB` olarak tanımlanmalıdır. Hosting ortamında gerçek D1 veritabanı
+  bağlanmalı ve `drizzle/` SQL migration dosyalarındaki `admin_sessions` ile
+  `request_limits` tabloları uygulanmalıdır. `subscribers` tablosunun D1 kopyası artık
+  uygulama tarafından kullanılmaz.
+- `SUPABASE_URL` ve `SUPABASE_SECRET_KEY` Cloudflare secret olarak ayarlanmalıdır.
 - `HTLL_ADMIN_PASSWORD` en az 20 karakterlik ayrı bir üretim sırrı olarak ayarlanmalıdır.
   Yerel `.env.local` veya erişim dosyası yayınlanmamalıdır.
 - Yönetim oturumu HttpOnly, SameSite=Strict çerezle 8 saat geçerlidir; HTTPS'te Secure
