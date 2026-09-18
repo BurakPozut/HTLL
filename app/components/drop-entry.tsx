@@ -11,7 +11,7 @@ const clamp = (n: number) => Math.max(0, Math.min(1, n));
 export function DropEntry() {
   const root = useRef<HTMLElement>(null);
   const progress = useRef(0);
-  const formInteraction = useRef(false);
+  const scrollFinished = useRef(false);
   const [phase, setPhase] = useState(0);
   const [notice, setNotice] = useState("");
   const [submitting, setSubmitting] = useState(false);
@@ -87,7 +87,11 @@ export function DropEntry() {
       lastTime = time;
       current = reduced.matches ? target : current + (target - current) * (1 - Math.exp(-delta / 65));
       if (Math.abs(target - current) < .00015) current = target;
-      const p = current;
+      let p = current;
+      if (p >= .89 || scrollFinished.current) {
+        scrollFinished.current = true;
+        current = target = p = 1;
+      }
       progress.current = p;
       const phase = p >= .89 ? 3 : p > .55 ? 2 : p > .12 ? 1 : 0;
       if (phase !== lastPhase) { lastPhase = phase; setPhase(phase); }
@@ -95,13 +99,13 @@ export function DropEntry() {
       if (!frame) lastTime = 0;
     };
     const update = () => {
-      target = formInteraction.current ? 1 : clamp((window.scrollY - start) / distance);
+      target = scrollFinished.current ? 1 : clamp((window.scrollY - start) / distance);
       if (!frame) frame = requestAnimationFrame(paint);
     };
     const measure = () => {
-      // Mobile Chrome resizes the viewport when its keyboard opens. Keep the
-      // final scroll phase stable while somebody is completing the form.
-      if (formInteraction.current) { update(); return; }
+      // Mobile keyboards resize the viewport. Once the reveal is complete,
+      // never let those resize/scroll events restart the entrance animation.
+      if (scrollFinished.current) { update(); return; }
       start = window.scrollY + section.getBoundingClientRect().top;
       distance = Math.max(1, section.offsetHeight - window.innerHeight);
       update();
@@ -126,11 +130,11 @@ export function DropEntry() {
           <span className="symbol-glitch symbol-glitch-a" aria-hidden="true" />
           <span className="symbol-glitch symbol-glitch-b" aria-hidden="true" />
         </div>
-        {phase === 3 && <section className="entry-access" aria-label="Drop bildirim formu" onFocusCapture={() => { formInteraction.current = true; }} onBlurCapture={(event) => { if (!event.currentTarget.contains(event.relatedTarget as Node | null)) formInteraction.current = false; }}>
+        {phase === 3 && <section className="entry-access" aria-label="Drop bildirim formu">
           <div className="window-echo echo-one" aria-hidden="true"><div>Access Request — HT/LL</div></div>
           <div className="window-echo echo-two" aria-hidden="true"><div>Password Required</div></div>
           <div className="retro-window">
-            <div className="retro-title"><span>System Access — HT/LL</span><button aria-label="Giriş sahnesine dön" onClick={() => window.scrollTo({ top: 0, behavior: "instant" })}>×</button></div>
+            <div className="retro-title"><span>System Access — HT/LL</span><button aria-label="Giriş sahnesini yeniden başlat" onClick={() => window.location.reload()}>×</button></div>
             <div className="retro-content">
               {!confirmationStep ? <>
                 <div className="retro-message"><span className="warning-symbol" aria-hidden="true">⚠</span><div><h2>GET YOUR EARLY ACCESS<br />PASSWORD</h2><p>REGISTER TO RECEIVE YOUR PASS.</p></div></div>

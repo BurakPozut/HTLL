@@ -45,7 +45,7 @@ export function HalftoneSkull() {
 
 export function DropEntry() {
   const root = useRef<HTMLElement>(null);
-  const formInteraction = useRef(false);
+  const scrollFinished = useRef(false);
   const [phase, setPhase] = useState(0);
   const [notice, setNotice] = useState("");
   const [phone, setPhone] = useState("");
@@ -65,7 +65,11 @@ export function DropEntry() {
       lastTime = time;
       current = reduced.matches ? target : current + (target - current) * (1 - Math.exp(-delta / 65));
       if (Math.abs(target - current) < .00015) current = target;
-      const p = current;
+      let p = current;
+      if (p >= .89 || scrollFinished.current) {
+        scrollFinished.current = true;
+        current = target = p = 1;
+      }
       const travel = smooth((p - .25) / .63);
       const opening = smooth(p / .5);
       // Only transform/opacity change during scroll; no geometry or text redraw loop.
@@ -79,11 +83,11 @@ export function DropEntry() {
       if (!frame) lastTime = 0;
     };
     const update = () => {
-      target = formInteraction.current ? 1 : clamp((window.scrollY - start) / distance);
+      target = scrollFinished.current ? 1 : clamp((window.scrollY - start) / distance);
       if (!frame) frame = requestAnimationFrame(paint);
     };
     const measure = () => {
-      if (formInteraction.current) { update(); return; }
+      if (scrollFinished.current) { update(); return; }
       start = window.scrollY + section.getBoundingClientRect().top;
       distance = Math.max(1, section.offsetHeight - window.innerHeight);
       update();
@@ -111,11 +115,11 @@ export function DropEntry() {
         <div className="entry-coordinate" aria-hidden="true">SYS. HTLL_001<br />41°00′ N / 28°58′ E<br /><span>● SIGNAL ACTIVE</span></div>
         {phase < 3 && <div className="entry-scroll"><span>{phase === 0 ? "SCROLL TO ENTER" : phase === 1 ? "OPENING THE GATE" : "ENTER THE VOID"}</span><div /><span className="scroll-arrow">↓</span></div>}
         <div className="entry-footer"><span>NOT FOR EVERYONE.</span><span>DROP 001 — COMING SOON</span><span>© HT/LL STUDIOS</span></div>
-        {phase === 3 && <section className="entry-access" aria-label="Drop bildirim formu" onFocusCapture={() => { formInteraction.current = true; }} onBlurCapture={(event) => { if (!event.currentTarget.contains(event.relatedTarget as Node | null)) formInteraction.current = false; }}>
+        {phase === 3 && <section className="entry-access" aria-label="Drop bildirim formu">
           <div className="window-echo echo-one" aria-hidden="true"><div>System Error — HT/LL</div></div>
           <div className="window-echo echo-two" aria-hidden="true"><div>Connection interrupted</div></div>
           <div className="retro-window">
-            <div className="retro-title"><span>System Access — HT/LL</span><button aria-label="Giriş sahnesine dön" onClick={() => window.scrollTo({ top: 0, behavior: "instant" })}>×</button></div>
+            <div className="retro-title"><span>System Access — HT/LL</span><button aria-label="Giriş sahnesini yeniden başlat" onClick={() => window.location.reload()}>×</button></div>
             <div className="retro-content">
               <div className="retro-message"><span className="warning-symbol" aria-hidden="true">⚠</span><div><h2>You are early.</h2><p>Drop 001 henüz açılmadı.<br />Sinyali ilk alanlardan ol.</p></div></div>
               <form onSubmit={(event) => { event.preventDefault(); setNotice("Bu bir ön izleme. Kayıt bağlantısı henüz aktif değil; bilgilerin gönderilmedi."); }}>
