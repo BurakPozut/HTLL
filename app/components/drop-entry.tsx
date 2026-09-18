@@ -11,6 +11,7 @@ const clamp = (n: number) => Math.max(0, Math.min(1, n));
 export function DropEntry() {
   const root = useRef<HTMLElement>(null);
   const progress = useRef(0);
+  const formInteraction = useRef(false);
   const [phase, setPhase] = useState(0);
   const [notice, setNotice] = useState("");
   const [submitting, setSubmitting] = useState(false);
@@ -94,10 +95,13 @@ export function DropEntry() {
       if (!frame) lastTime = 0;
     };
     const update = () => {
-      target = clamp((window.scrollY - start) / distance);
+      target = formInteraction.current ? 1 : clamp((window.scrollY - start) / distance);
       if (!frame) frame = requestAnimationFrame(paint);
     };
     const measure = () => {
+      // Mobile Chrome resizes the viewport when its keyboard opens. Keep the
+      // final scroll phase stable while somebody is completing the form.
+      if (formInteraction.current) { update(); return; }
       start = window.scrollY + section.getBoundingClientRect().top;
       distance = Math.max(1, section.offsetHeight - window.innerHeight);
       update();
@@ -122,7 +126,7 @@ export function DropEntry() {
           <span className="symbol-glitch symbol-glitch-a" aria-hidden="true" />
           <span className="symbol-glitch symbol-glitch-b" aria-hidden="true" />
         </div>
-        {phase === 3 && <section className="entry-access" aria-label="Drop bildirim formu">
+        {phase === 3 && <section className="entry-access" aria-label="Drop bildirim formu" onFocusCapture={() => { formInteraction.current = true; }} onBlurCapture={(event) => { if (!event.currentTarget.contains(event.relatedTarget as Node | null)) formInteraction.current = false; }}>
           <div className="window-echo echo-one" aria-hidden="true"><div>Access Request — HT/LL</div></div>
           <div className="window-echo echo-two" aria-hidden="true"><div>Password Required</div></div>
           <div className="retro-window">

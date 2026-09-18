@@ -45,6 +45,7 @@ export function HalftoneSkull() {
 
 export function DropEntry() {
   const root = useRef<HTMLElement>(null);
+  const formInteraction = useRef(false);
   const [phase, setPhase] = useState(0);
   const [notice, setNotice] = useState("");
   const [phone, setPhone] = useState("");
@@ -78,10 +79,11 @@ export function DropEntry() {
       if (!frame) lastTime = 0;
     };
     const update = () => {
-      target = clamp((window.scrollY - start) / distance);
+      target = formInteraction.current ? 1 : clamp((window.scrollY - start) / distance);
       if (!frame) frame = requestAnimationFrame(paint);
     };
     const measure = () => {
+      if (formInteraction.current) { update(); return; }
       start = window.scrollY + section.getBoundingClientRect().top;
       distance = Math.max(1, section.offsetHeight - window.innerHeight);
       update();
@@ -109,7 +111,7 @@ export function DropEntry() {
         <div className="entry-coordinate" aria-hidden="true">SYS. HTLL_001<br />41°00′ N / 28°58′ E<br /><span>● SIGNAL ACTIVE</span></div>
         {phase < 3 && <div className="entry-scroll"><span>{phase === 0 ? "SCROLL TO ENTER" : phase === 1 ? "OPENING THE GATE" : "ENTER THE VOID"}</span><div /><span className="scroll-arrow">↓</span></div>}
         <div className="entry-footer"><span>NOT FOR EVERYONE.</span><span>DROP 001 — COMING SOON</span><span>© HT/LL STUDIOS</span></div>
-        {phase === 3 && <section className="entry-access" aria-label="Drop bildirim formu">
+        {phase === 3 && <section className="entry-access" aria-label="Drop bildirim formu" onFocusCapture={() => { formInteraction.current = true; }} onBlurCapture={(event) => { if (!event.currentTarget.contains(event.relatedTarget as Node | null)) formInteraction.current = false; }}>
           <div className="window-echo echo-one" aria-hidden="true"><div>System Error — HT/LL</div></div>
           <div className="window-echo echo-two" aria-hidden="true"><div>Connection interrupted</div></div>
           <div className="retro-window">
