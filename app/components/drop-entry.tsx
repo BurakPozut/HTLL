@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import "./drop-entry.css";
 import { BinarySkull } from "./binary-skull";
 import { IntroFlash } from "./intro-flash";
+import { formatTurkishPhoneInput } from "../lib/registration";
 
 const clamp = (n: number) => Math.max(0, Math.min(1, n));
 
@@ -14,6 +15,7 @@ export function DropEntry() {
   const [notice, setNotice] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [confirmationStep, setConfirmationStep] = useState(false);
+  const [phone, setPhone] = useState("");
   async function subscribe(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (submitting || confirmationStep) return;
@@ -132,7 +134,7 @@ export function DropEntry() {
                   <fieldset disabled={submitting} className="registration-fields">
                   <div className="registration-grid">
                     <label htmlFor="entry-email">E-posta adresi<input id="entry-email" type="email" name="email" autoComplete="email" placeholder="you@underground.net" required /></label>
-                    <label htmlFor="entry-phone">Telefon numarası <span>(isteğe bağlı)</span><input id="entry-phone" type="tel" name="phone" autoComplete="tel" placeholder="+90" /></label>
+                    <label htmlFor="entry-phone">Telefon numarası <span>(isteğe bağlı)</span><input id="entry-phone" type="tel" inputMode="numeric" name="phone" autoComplete="tel-national" placeholder="5XX-XXX-XXXX" pattern="5[0-9]{2}-[0-9]{3}-[0-9]{4}" maxLength={12} title="5XX-XXX-XXXX formatında bir telefon numarası yazın" value={phone} onChange={(event) => setPhone(formatTurkishPhoneInput(event.currentTarget.value))} /></label>
                   </div>
                   <div className="registration-trap" aria-hidden="true"><label>Website<input name="website" tabIndex={-1} autoComplete="off" /></label></div>
                   <label className="registration-consent"><input type="checkbox" name="consent" required /><span>HTLL’nin drop açılışı hakkında e-posta ve paylaşırsam telefon yoluyla bana haber vermesini istiyorum.</span></label>

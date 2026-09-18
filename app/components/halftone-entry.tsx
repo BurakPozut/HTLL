@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import "./halftone-entry.css";
+import { formatTurkishPhoneInput } from "../lib/registration";
 
 const clamp = (n: number) => Math.max(0, Math.min(1, n));
 const smooth = (n: number) => { const v = clamp(n); return v * v * (3 - 2 * v); };
@@ -46,6 +47,7 @@ export function DropEntry() {
   const root = useRef<HTMLElement>(null);
   const [phase, setPhase] = useState(0);
   const [notice, setNotice] = useState("");
+  const [phone, setPhone] = useState("");
   useEffect(() => {
     const section = root.current;
     if (!section) return;
@@ -116,7 +118,7 @@ export function DropEntry() {
               <div className="retro-message"><span className="warning-symbol" aria-hidden="true">⚠</span><div><h2>You are early.</h2><p>Drop 001 henüz açılmadı.<br />Sinyali ilk alanlardan ol.</p></div></div>
               <form onSubmit={(event) => { event.preventDefault(); setNotice("Bu bir ön izleme. Kayıt bağlantısı henüz aktif değil; bilgilerin gönderilmedi."); }}>
                 <label htmlFor="entry-email">E-posta adresi<input id="entry-email" type="email" name="email" autoComplete="email" placeholder="you@underground.net" required /></label>
-                <label htmlFor="entry-phone">Telefon numarası <span>(isteğe bağlı)</span><input id="entry-phone" type="tel" name="phone" autoComplete="tel" placeholder="+90" /></label>
+                <label htmlFor="entry-phone">Telefon numarası <span>(isteğe bağlı)</span><input id="entry-phone" type="tel" inputMode="numeric" name="phone" autoComplete="tel-national" placeholder="5XX-XXX-XXXX" pattern="5[0-9]{2}-[0-9]{3}-[0-9]{4}" maxLength={12} title="5XX-XXX-XXXX formatında bir telefon numarası yazın" value={phone} onChange={(event) => setPhone(formatTurkishPhoneInput(event.currentTarget.value))} /></label>
                 <p className="preview-note">ÖN İZLEME / KAYIT HENÜZ AKTİF DEĞİL</p>
                 <div className="retro-actions"><button type="submit">Erişim iste ↵</button></div>
                 <p className="entry-notice" role="status">{notice}</p>
