@@ -40,6 +40,54 @@ async function request(path: string, init: RequestInit = {}) {
   return response;
 }
 
+export async function consumeRequestLimit(values: {
+  key: string;
+  now: number;
+  expiresAt: number;
+}) {
+  const response = await request("rpc/consume_request_limit", {
+    method: "POST",
+    body: JSON.stringify({
+      p_key: values.key,
+      p_now: values.now,
+      p_expires_at: values.expiresAt,
+    }),
+  });
+  const count = Number(await response.json());
+  if (!Number.isSafeInteger(count) || count < 1) throw new Error("Supabase returned an invalid rate-limit count.");
+  return count;
+}
+
+export async function deleteExpiredAdminSessions(now: number) {
+  const query = new URLSearchParams({ expires_at: `lt.${now}` });
+  await request(`admin_sessions?${query}`, { method: "DELETE" });
+}
+
+export async function createAdminSession(tokenHash: string, expiresAt: number) {
+  await request("admin_sessions", {
+    method: "POST",
+    headers: { Prefer: "return=minimal" },
+    body: JSON.stringify({ token_hash: tokenHash, expires_at: expiresAt }),
+  });
+}
+
+export async function hasAdminSession(tokenHash: string, now: number) {
+  const query = new URLSearchParams({
+    select: "token_hash",
+    token_hash: `eq.${tokenHash}`,
+    expires_at: `gt.${now}`,
+    limit: "1",
+  });
+  const response = await request(`admin_sessions?${query}`);
+  const rows = await response.json() as Array<{ token_hash: string }>;
+  return rows.length === 1;
+}
+
+export async function deleteAdminSession(tokenHash: string) {
+  const query = new URLSearchParams({ token_hash: `eq.${tokenHash}` });
+  await request(`admin_sessions?${query}`, { method: "DELETE" });
+}
+
 export async function createSubscriber(values: {
   email: string;
   phone: string | null;

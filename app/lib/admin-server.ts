@@ -1,6 +1,4 @@
-import { and, eq, gt, lt, sql } from "drizzle-orm";
-import { getDb } from "../../db";
-import { adminSessions, requestLimits } from "../../db/schema";
+import { consumeRequestLimit, hasAdminSession } from "./supabase-server";
 
 export class HttpError extends Error {
   constructor(public status: number, message: string) { super(message); }
@@ -57,17 +55,12 @@ export async function passwordMatches(value: string) {
 }
 
 export async function limitRequest(request: Request, kind: string, maximum: number) {
-  const db = getDb(); const now = Date.now();
+  const now = Date.now();
   // CF sets this header at the production edge. Locally all requests share a bucket.
   const ip = request.headers.get("cf-connecting-ip") ?? "local";
   const key = await digest(`${adminPassword()}:${kind}:${ip}`);
-  const [bucket] = await db.insert(requestLimits).values({ key, count: 1, expiresAt: now + 15 * 60_000 })
-    .onConflictDoUpdate({ target: requestLimits.key, set: {
-      count: sql`CASE WHEN ${requestLimits.expiresAt} < ${now} THEN 1 ELSE ${requestLimits.count} + 1 END`,
-      expiresAt: sql`CASE WHEN ${requestLimits.expiresAt} < ${now} THEN ${now + 15 * 60_000} ELSE ${requestLimits.expiresAt} END`,
-    } }).returning();
-  await db.delete(requestLimits).where(lt(requestLimits.expiresAt, now));
-  if (bucket.count > maximum) throw new HttpError(429, "Çok fazla deneme yaptın. 15 dakika sonra tekrar dene.");
+  const count = await consumeRequestLimit({ key, now, expiresAt: now + 15 * 60_000 });
+  if (count > maximum) throw new HttpError(429, "Çok fazla deneme yaptın. 15 dakika sonra tekrar dene.");
 }
 
 export const SESSION_COOKIE = "htll_admin_session";
@@ -78,8 +71,7 @@ export async function requireAdmin(request: Request) {
   const token = sessionToken(request);
   if (!/^[a-f0-9]{64}$/.test(token)) throw new HttpError(401, "Giriş yapmalısın.");
   const tokenHash = await digest(token);
-  const [session] = await getDb().select().from(adminSessions).where(and(eq(adminSessions.tokenHash, tokenHash), gt(adminSessions.expiresAt, Date.now()))).limit(1);
-  if (!session) throw new HttpError(401, "Oturum süresi doldu. Yeniden giriş yap.");
+  if (!await hasAdminSession(tokenHash, Date.now())) throw new HttpError(401, "Oturum süresi doldu. Yeniden giriş yap.");
   return tokenHash;
 }
 export function sessionCookie(request: Request, token: string, maxAge: number) {

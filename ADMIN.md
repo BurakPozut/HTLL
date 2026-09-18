@@ -6,12 +6,12 @@ mevcut kayıt bilgilerini değiştirmez. Bildirim izni sürümü ve UTC kayıt z
 Bu bir müşteri hesabı oluşturmaz ve e-posta/SMS göndermez.
 
 Cloudflare Worker üzerinde `SUPABASE_URL` ve `SUPABASE_SECRET_KEY` secret'ları
-tanımlanmalıdır. Secret key tarayıcıya gönderilmez ve Git'e eklenmez. D1 yalnızca
-yönetici oturumları ile istek limitlerini saklamak için kullanılmaya devam eder.
+tanımlanmalıdır. Secret key tarayıcıya gönderilmez ve Git'e eklenmez. Waitlist,
+yönetici oturumları ve istek limitleri Supabase'te saklanır; D1 kullanılmaz.
 
 ## Yerel kurulum
 
-1. `npm run db:local` — mevcut SQL migrations dosyalarını yerel veritabanına uygular.
+1. `supabase/schema.sql` dosyasını Supabase SQL Editor'da bir kez çalıştır.
 2. `npm run admin:setup` — `.env.local` içine rastgele yönetici şifresi ekler.
    Var olan şifreyi değiştirmez. İlk oluşturulan erişim bilgisi `work/admin-access.txt`
    içindedir; bu dosya Git'e girmez.
@@ -19,16 +19,13 @@ yönetici oturumları ile istek limitlerini saklamak için kullanılmaya devam e
 4. `/admin` adresinden giriş yap. Arama, 50 kayıtlık sayfalama ve filtrelenmiş CSV
    indirme bulunur. CSV tek seferde en fazla 10.000 kayıt indirir.
 
-Yerel yönetici oturumları ve istek limitleri `.wrangler/state` altında saklanır.
-Waitlist kayıtları, yerel geliştirmede de yapılandırdığınız Supabase projesine yazılır.
+Yerel waitlist kayıtları, yönetici oturumları ve istek limitleri yapılandırdığınız
+Supabase projesine yazılır.
 Canlı verileri etkilememek için geliştirme ve üretim için ayrı Supabase projeleri kullanın.
 
 ## Canlıya geçiş
 
-- D1 binding adı `DB` olarak tanımlanmalıdır. Hosting ortamında gerçek D1 veritabanı
-  bağlanmalı ve `drizzle/` SQL migration dosyalarındaki `admin_sessions` ile
-  `request_limits` tabloları uygulanmalıdır. `subscribers` tablosunun D1 kopyası artık
-  uygulama tarafından kullanılmaz.
+- Cloudflare D1 binding gerekmez.
 - `SUPABASE_URL` ve `SUPABASE_SECRET_KEY` Cloudflare secret olarak ayarlanmalıdır.
 - `HTLL_ADMIN_PASSWORD` en az 20 karakterlik ayrı bir üretim sırrı olarak ayarlanmalıdır.
   Yerel `.env.local` veya erişim dosyası yayınlanmamalıdır.

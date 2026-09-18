@@ -1,6 +1,13 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { createSubscriber, getSubscriberPage } from "../app/lib/supabase-server.ts";
+import {
+  consumeRequestLimit,
+  createAdminSession,
+  createSubscriber,
+  deleteAdminSession,
+  getSubscriberPage,
+  hasAdminSession,
+} from "../app/lib/supabase-server.ts";
 
 const originalFetch = globalThis.fetch;
 
@@ -66,4 +73,26 @@ test("maps Supabase rows and reads the exact total", async () => {
     createdAt: Date.parse("2026-09-18T10:00:00.000Z"),
     consentVersion: "v1",
   });
+});
+
+test("uses Supabase for rate limits and admin sessions", async () => {
+  const requests = [];
+  globalThis.fetch = async (url, init = {}) => {
+    requests.push({ url: String(url), init });
+    if (String(url).includes("rpc/consume_request_limit")) return Response.json(2);
+    if (init.method === "POST") return new Response(null, { status: 201 });
+    if (init.method === "DELETE") return new Response(null, { status: 204 });
+    return Response.json([{ token_hash: "abc" }]);
+  };
+
+  assert.equal(await consumeRequestLimit({ key: "bucket", now: 10, expiresAt: 20 }), 2);
+  await createAdminSession("abc", 20);
+  assert.equal(await hasAdminSession("abc", 10), true);
+  await deleteAdminSession("abc");
+
+  assert.equal(requests.length, 4);
+  assert.match(requests[0].url, /rpc\/consume_request_limit$/);
+  assert.match(requests[1].url, /\/admin_sessions$/);
+  assert.match(requests[2].url, /admin_sessions\?/);
+  assert.equal(requests[3].init.method, "DELETE");
 });

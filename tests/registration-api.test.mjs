@@ -1,13 +1,16 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
-import { spawnSync } from "node:child_process";
 
 // Explicit local integration test; cleans up only its own generated contact records.
 test("local registration, authenticated listing, CSV and logout", async () => {
   const base = "http://localhost:3000";
-  const env = await readFile(new URL("../.env.local", import.meta.url), "utf8");
-  const password = env.match(/^HTLL_ADMIN_PASSWORD=(.+)$/m)?.[1]?.trim();
+  const envText = await readFile(new URL("../.env.local", import.meta.url), "utf8");
+  const env = Object.fromEntries(envText.split(/\r?\n/).filter(line => line && !line.startsWith("#") && line.includes("=")).map(line => {
+    const separator = line.indexOf("=");
+    return [line.slice(0, separator), line.slice(separator + 1)];
+  }));
+  const password = env.HTLL_ADMIN_PASSWORD?.trim();
   assert.ok(password);
   const email = `htll-test-${Date.now()}@example.com`;
   let cookie = "";
@@ -39,9 +42,12 @@ test("local registration, authenticated listing, CSV and logout", async () => {
     assert.equal((await post("/api/admin/logout", {})).status, 200);
     assert.equal((await fetch(base + "/api/admin/subscribers", { headers: { Cookie: cookie } })).status, 401);
   } finally {
-    const cleanup = spawnSync(process.execPath, ["node_modules/wrangler/bin/wrangler.js", "d1", "execute", "DB", "--local", "--config", "work/d1-local.json", "--persist-to", ".wrangler/state", "--command", `DELETE FROM subscribers WHERE email = '${email}'`], {
-      env: { ...process.env, WRANGLER_SEND_METRICS: "false", WRANGLER_LOG_PATH: ".wrangler/logs" }, encoding: "utf8",
+    const projectUrl = new URL(env.SUPABASE_URL).origin;
+    const query = new URLSearchParams({ email: `eq.${email}` });
+    const cleanup = await fetch(`${projectUrl}/rest/v1/subscribers?${query}`, {
+      method: "DELETE",
+      headers: { apikey: env.SUPABASE_SECRET_KEY, Authorization: `Bearer ${env.SUPABASE_SECRET_KEY}` },
     });
-    assert.equal(cleanup.status, 0, "Temporary test record cleanup failed");
+    assert.ok(cleanup.ok, "Temporary test record cleanup failed");
   }
 });
