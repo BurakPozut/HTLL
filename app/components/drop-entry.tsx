@@ -115,6 +115,12 @@ export function DropEntry() {
     window.addEventListener("resize", measure);
     return () => { cancelAnimationFrame(frame); window.removeEventListener("scroll", update); window.removeEventListener("resize", measure); };
   }, []);
+  const scrollToForm = () => {
+    const section = root.current;
+    if (!section) return;
+    const top = window.scrollY + section.getBoundingClientRect().top + section.offsetHeight - window.innerHeight;
+    window.scrollTo({ top, behavior: "smooth" });
+  };
   return (
     <main className={`drop-entry phase-${phase} ${booted ? "booted" : ""}`} ref={root} aria-label="Kurukafa giriş sahnesi. Kayıt ekranına ulaşmak için aşağı kaydırın.">
       {!introFinished && <IntroFlash onComplete={finishIntro} />}
@@ -130,6 +136,10 @@ export function DropEntry() {
           <span className="symbol-glitch symbol-glitch-a" aria-hidden="true" />
           <span className="symbol-glitch symbol-glitch-b" aria-hidden="true" />
         </div>
+        {phase < 3 && <button type="button" className="entry-scroll" onClick={scrollToForm} aria-label="Kayıt formuna gitmek için aşağı kaydır">
+          <span className="scroll-tag">LOW LIFE</span>
+          <span className="scroll-arrow" aria-hidden="true">↓</span>
+        </button>}
         {phase === 3 && <section className="entry-access" aria-label="Drop bildirim formu">
           <div className="window-echo echo-one" aria-hidden="true"><div>Access Request — HT/LL</div></div>
           <div className="window-echo echo-two" aria-hidden="true"><div>Password Required</div></div>
