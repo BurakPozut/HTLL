@@ -137,7 +137,6 @@ export function DropEntry() {
           <span className="symbol-glitch symbol-glitch-b" aria-hidden="true" />
         </div>
         {phase < 3 && <button type="button" className="entry-scroll" onClick={scrollToForm} aria-label="Kayıt formuna gitmek için aşağı kaydır">
-          <span className="scroll-tag">LOW LIFE</span>
           <span className="scroll-arrow" aria-hidden="true">↓</span>
         </button>}
         {phase === 3 && <section className="entry-access" aria-label="Drop bildirim formu">
