@@ -1,0 +1,242 @@
+[
+  {
+    "slug": "hakkimizda",
+    "title": "Hakkımızda",
+    "blocks": [
+      {
+        "kind": "paragraph",
+        "text": "HTLL (HIGH TECH LOW LIFE), Umut Akyüz tarafından işletilen bağımsız bir giyim markasıdır. Ürün ve koleksiyon bilgileri hightechlowlifestudios.com adresinde yayımlanır."
+      },
+      {
+        "kind": "paragraph",
+        "text": "Satıcı: Umut Akyüz (şahıs işletmesi)"
+      },
+      {
+        "kind": "paragraph",
+        "text": "Adres: Piri Reis Mah. Necip Fazıl Kısakürek Cad. İsthanbulevleri Han7 A8 ve A9 Bloklar No: 2, F İç Kapı No: 1, Esenyurt/İstanbul"
+      },
+      {
+        "kind": "paragraph",
+        "text": "E-posta: hightechlowlifestudios@gmail.com"
+      },
+      {
+        "kind": "paragraph",
+        "text": "Telefon: 0537 981 4748"
+      }
+    ]
+  },
+  {
+    "slug": "iletisim",
+    "title": "İletişim",
+    "blocks": [
+      {
+        "kind": "paragraph",
+        "text": "Sipariş, teslimat, cayma, iade ve ürün sorularınız için hightechlowlifestudios@gmail.com adresinden veya 0537 981 4748 numaralı telefondan bize ulaşabilirsiniz."
+      },
+      {
+        "kind": "paragraph",
+        "text": "Satıcı: Umut Akyüz (şahıs işletmesi). İşletme adresi: Piri Reis Mah. Necip Fazıl Kısakürek Cad. İsthanbulevleri Han7 A8 ve A9 Bloklar No: 2, F İç Kapı No: 1, Esenyurt/İstanbul."
+      }
+    ]
+  },
+  {
+    "slug": "teslimat-ve-kargo",
+    "title": "Teslimat ve Kargo",
+    "blocks": [
+      {
+        "kind": "paragraph",
+        "text": "Siparişler Türkiye içindeki adreslere gönderilir. 4.000 TL ve üzerindeki siparişlerde kargo ücretsizdir. 4.000 TL altındaki siparişlerde uygulanacak kargo ücreti, sipariş tamamlanmadan önce sepet veya ödeme ekranında açıkça gösterilir."
+      },
+      {
+        "kind": "paragraph",
+        "text": "Ödeme onayından sonra sipariş, ürün sayfasında ayrıca bir ön sipariş süresi belirtilmediği takdirde 7 iş günü içinde anlaşmalı kargo firmasına teslim edilir. İş günü hesabında cumartesi, pazar ve resmî tatil günleri sayılmaz. Kargo taşıma süresi teslimat adresine göre değişebilir. Ürün her hâlükârda mevzuattaki azami teslim süresi içinde teslim edilir."
+      },
+      {
+        "kind": "paragraph",
+        "text": "Ön sipariş ürünlerinde tahmini kargoya veriliş zamanı ürün sayfasında ve ödeme öncesi sipariş özetinde ayrıca belirtilir. Paket tesliminde gözle görülür hasar varsa kargo görevlisiyle birlikte kontrol etmeniz ve mümkünse hasar tespit tutanağı düzenletmeniz önerilir. Sipariş takibi için bizimle iletişime geçebilirsiniz."
+      }
+    ]
+  },
+  {
+    "slug": "iptal-cayma-ve-iade",
+    "title": "İptal, Cayma ve İade",
+    "blocks": [
+      {
+        "kind": "heading",
+        "text": "Cayma hakkı"
+      },
+      {
+        "kind": "paragraph",
+        "text": "Tüketici, mevzuatta belirtilen istisnalar saklı kalmak üzere, ürünü teslim aldığı tarihten itibaren 14 gün içinde herhangi bir gerekçe göstermeden cayma hakkını kullanabilir. Cayma bildirimi ürün teslim edilmeden önce de yapılabilir. Bildiriminizi hightechlowlifestudios@gmail.com adresine e-posta göndererek veya 0537 981 4748 numarasına ulaşarak iletebilirsiniz. Bildirimde sipariş numaranızı ve caymak istediğiniz ürünü belirtmeniz yeterlidir."
+      },
+      {
+        "kind": "heading",
+        "text": "İade gönderimi ve bedel iadesi"
+      },
+      {
+        "kind": "paragraph",
+        "text": "Cayma bildiriminizi ilettiğiniz tarihten itibaren 14 gün içinde ürünü geri göndermelisiniz. Cayma hakkı kapsamında iade gönderim masrafı satıcı tarafından karşılanır. İade gönderimi için gerekli yönlendirmeyi bizimle iletişime geçtiğinizde paylaşırız. İade adresi işletme adresimizdir: Piri Reis Mah. Necip Fazıl Kısakürek Cad. İsthanbulevleri Han7 A8 ve A9 Bloklar No: 2, F İç Kapı No: 1, Esenyurt/İstanbul."
+      },
+      {
+        "kind": "paragraph",
+        "text": "Cayma hakkının usulüne uygun kullanılması hâlinde, ürün bedeli ve mevzuat uyarınca iadesi gereken teslimat masrafları dâhil tahsil edilen ödemeler, yasal süre içinde ve satın alırken kullanılan ödeme aracına uygun olarak iade edilir."
+      },
+      {
+        "kind": "heading",
+        "text": "Ayıplı veya yanlış ürün"
+      },
+      {
+        "kind": "paragraph",
+        "text": "Ürün kusurlu, hasarlı ya da sipariş ettiğiniz üründen farklı geldiyse fotoğraflar ve sipariş numarasıyla hightechlowlifestudios@gmail.com adresine yazın veya 0537 981 4748 numarasından bize ulaşın. Ayıplı mala ilişkin yasal haklarınız saklıdır."
+      },
+      {
+        "kind": "heading",
+        "text": "Cayma hakkı istisnaları"
+      },
+      {
+        "kind": "paragraph",
+        "text": "Kanunda sayılan cayma hakkı istisnaları, yalnızca ilgili istisnanın koşulları oluştuğunda uygulanır. Standart bedenli giyim ürünlerinde genel bir “iade alınmaz” kuralı uygulanmaz."
+      }
+    ]
+  },
+  {
+    "slug": "on-bilgilendirme",
+    "title": "Ön Bilgilendirme",
+    "blocks": [
+      {
+        "kind": "paragraph",
+        "text": "Satıcı, Umut Akyüz (şahıs işletmesi), Piri Reis Mah. Necip Fazıl Kısakürek Cad. İsthanbulevleri Han7 A8 ve A9 Bloklar No: 2, F İç Kapı No: 1, Esenyurt/İstanbul adresinde faaliyet gösterir. İletişim: 0537 981 4748 ve hightechlowlifestudios@gmail.com."
+      },
+      {
+        "kind": "paragraph",
+        "text": "HTLL ürünleri Türkiye içindeki adreslere gönderilir. Kargo, 4.000 TL ve üzerindeki siparişlerde ücretsizdir; bu tutarın altındaki siparişlerde kargo bedeli ödeme tamamlanmadan önce gösterilir. Ödeme onayından sonra, ürün sayfasında farklı bir ön sipariş tarihi belirtilmemişse sipariş 7 iş günü içinde kargoya teslim edilir. Cumartesi, pazar ve resmî tatiller iş günü sayılmaz."
+      },
+      {
+        "kind": "paragraph",
+        "text": "Siparişe konu ürünün adı ve temel özellikleri, varyantı, adedi, vergiler dâhil ürün bedeli, kargo bedeli, ödenecek toplam tutar, ödeme yöntemi ve teslimat adresi ödeme yükümlülüğü doğmadan hemen önce checkout ekranında gösterilir. Alıcı, ödemeyi tamamlamadan önce bu bilgileri ve cayma koşullarını inceleyebilir."
+      }
+    ]
+  },
+  {
+    "slug": "mesafeli-satis-sozlesmesi",
+    "title": "Mesafeli Satış Sözleşmesi",
+    "blocks": [
+      {
+        "kind": "heading",
+        "text": "Taraflar"
+      },
+      {
+        "kind": "paragraph",
+        "text": "Satıcı: Umut Akyüz (şahıs işletmesi). Adres: Piri Reis Mah. Necip Fazıl Kısakürek Cad. İsthanbulevleri Han7 A8 ve A9 Bloklar No: 2, F İç Kapı No: 1, Esenyurt/İstanbul. Telefon: 0537 981 4748. E-posta: hightechlowlifestudios@gmail.com."
+      },
+      {
+        "kind": "paragraph",
+        "text": "Alıcı ve siparişe konu ürün, varyant, adet, bedel, teslimat adresi, ödeme yöntemi ve sipariş numarası checkout ekranında ve sipariş onayında gösterilen bilgilerdir."
+      },
+      {
+        "kind": "heading",
+        "text": "Sözleşmenin konusu ve ürün bedeli"
+      },
+      {
+        "kind": "paragraph",
+        "text": "Bu sözleşme, alıcının hightechlowlifestudios.com üzerinden elektronik ortamda sipariş verdiği ürünün satışı ve teslimi ile tarafların hak ve yükümlülüklerini düzenler. Ürünün temel özellikleri, vergiler dâhil satış bedeli, kargo ücreti ve ödenecek toplam ödeme öncesinde checkout ekranında gösterilir. Sipariş, ödeme onayından sonra işleme alınır."
+      },
+      {
+        "kind": "heading",
+        "text": "Teslimat"
+      },
+      {
+        "kind": "paragraph",
+        "text": "Ürün, alıcının checkout sırasında bildirdiği teslimat adresine anlaşmalı kargo firmasıyla gönderilir. 4.000 TL ve üzerindeki siparişlerde kargo ücretsizdir; altındaki siparişlerde kargo bedeli sipariş tamamlanmadan önce gösterilir. Ürün sayfasında ayrı bir ön sipariş süresi açıklanmamışsa satıcı siparişi ödeme onayından sonra 7 iş günü içinde kargoya teslim eder. Cumartesi, pazar ve resmî tatiller iş günü sayılmaz. Teslimat, mevzuattaki azami süre içinde tamamlanır."
+      },
+      {
+        "kind": "heading",
+        "text": "Cayma ve iade"
+      },
+      {
+        "kind": "paragraph",
+        "text": "Alıcı, mevzuattaki istisnalar saklı kalmak üzere ürünü teslim aldığı tarihten itibaren 14 gün içinde gerekçe göstermeden cayma hakkını kullanabilir. Cayma bildirimi hightechlowlifestudios@gmail.com adresine veya 0537 981 4748 numarasına iletilebilir. Alıcı ürünü cayma bildiriminden itibaren 14 gün içinde geri gönderir. Cayma hakkı kapsamındaki iade gönderim masrafı satıcı tarafından karşılanır. İade ve bedel iadesi, yürürlükteki mevzuata göre yapılır."
+      },
+      {
+        "kind": "heading",
+        "text": "Uyuşmazlıkların çözümü"
+      },
+      {
+        "kind": "paragraph",
+        "text": "Uyuşmazlıklarda tüketicinin yerleşim yerindeki veya tüketici işleminin yapıldığı yerdeki, ilgili yıl için görevli ve yetkili Tüketici Hakem Heyetlerine ve Tüketici Mahkemelerine başvurulabilir. Tüketicinin kanundan doğan başvuru hakları saklıdır."
+      },
+      {
+        "kind": "heading",
+        "text": "Yürürlük"
+      },
+      {
+        "kind": "paragraph",
+        "text": "Alıcı, ödeme yükümlülüğü doğmadan önce ön bilgilendirme içeriğine erişir ve siparişi tamamlamadan önce sözleşme koşullarını onaylar. Siparişe ait bilgiler ve onay kaydı alıcıya elektronik ortamda iletilir veya erişilebilir kılınır."
+      }
+    ]
+  },
+  {
+    "slug": "gizlilik",
+    "title": "Gizlilik ve Kişisel Verilerin İşlenmesi",
+    "blocks": [
+      {
+        "kind": "heading",
+        "text": "Veri sorumlusu"
+      },
+      {
+        "kind": "paragraph",
+        "text": "Kişisel verilerinizin veri sorumlusu Umut Akyüz (şahıs işletmesi) olup iletişim bilgileri hightechlowlifestudios@gmail.com, 0537 981 4748 ve Piri Reis Mah. Necip Fazıl Kısakürek Cad. İsthanbulevleri Han7 A8 ve A9 Bloklar No: 2, F İç Kapı No: 1, Esenyurt/İstanbul adresidir."
+      },
+      {
+        "kind": "heading",
+        "text": "İşlenen veriler ve amaçlar"
+      },
+      {
+        "kind": "paragraph",
+        "text": "Waitlist kaydında e-posta ve telefon; sipariş ve müşteri hizmetlerinde ad-soyad, iletişim ve teslimat/fatura adresi, sipariş ve işlem güvenliği bilgileri işlenebilir. Site kullanımı sırasında teknik kayıtlar ve zorunlu çerez bilgileri oluşabilir. Veriler; siteyi işletme ve güvenliğini sağlama, waitlist/erken erişim talebini yürütme, sipariş ve teslimatı gerçekleştirme, ödeme ve muhasebe süreçlerini yürütme, iade ve müşteri desteği sağlama, yasal yükümlülükleri yerine getirme ve uyuşmazlıkları takip etme amaçlarıyla işlenir."
+      },
+      {
+        "kind": "paragraph",
+        "text": "Waitlist bilgileri kayıt ve erken erişim talebi hakkında bilgilendirme için kullanılır. Waitlist kaydı genel kampanya ve pazarlama mesajları için tek başına izin oluşturmaz."
+      },
+      {
+        "kind": "heading",
+        "text": "Aktarım, saklama ve güvenlik"
+      },
+      {
+        "kind": "paragraph",
+        "text": "Siparişin yerine getirilmesi için gerekli veriler ödeme hizmeti sağlayıcısına ve kargo firmasına; yasal zorunluluk hâlinde yetkili kamu kurumlarına gerekli olduğu ölçüde aktarılabilir. Site ve ödeme altyapısı ile kullanılan teknik hizmet sağlayıcılarına ilişkin veri işleme ve varsa yurt dışına aktarım, kullanılan hizmetlerin gerçek ayarları ve yürürlükteki mevzuata göre gerçekleştirilir."
+      },
+      {
+        "kind": "paragraph",
+        "text": "Kişisel veriler, işleme amacı ve mevzuattaki saklama yükümlülükleri için gereken süre boyunca saklanır; süre sona erdiğinde silinir, yok edilir veya anonim hâle getirilir. Verilerin korunması için uygun teknik ve idari tedbirler alınır."
+      },
+      {
+        "kind": "heading",
+        "text": "Çerezler"
+      },
+      {
+        "kind": "paragraph",
+        "text": "Site, sepet ve ödeme akışının çalışması ve güvenliğin sağlanması için gerekli teknik çerezleri kullanabilir. Reklam veya analitik amaçlı izleme araçları devreye alınırsa çerez açıklaması ve gerekli tercih/rıza mekanizması kullanıma alınmadan önce güncellenir."
+      },
+      {
+        "kind": "heading",
+        "text": "İlgili kişi hakları"
+      },
+      {
+        "kind": "paragraph",
+        "text": "KVKK kapsamında kişisel verilerinizin işlenip işlenmediğini öğrenme, işlenmişse bilgi isteme, işleme amacını ve amaca uygun kullanılıp kullanılmadığını öğrenme, aktarım yapılan üçüncü kişileri bilme, eksik veya yanlış verilerin düzeltilmesini isteme, mevzuattaki koşullarda silme/yok etme isteme, bu işlemlerin aktarım yapılan kişilere bildirilmesini isteme, otomatik analiz sonucu aleyhe bir sonuca itiraz etme ve kanuna aykırı işlem nedeniyle zararın giderilmesini talep etme haklarınız vardır. Başvurularınızı hightechlowlifestudios@gmail.com adresine iletebilirsiniz. Başvurularda mevzuattaki usul ve kimlik doğrulama kuralları uygulanır."
+      }
+    ]
+  },
+  {
+    "slug": "waitlist-bilgilendirmesi",
+    "title": "Waitlist Bilgilendirmesi",
+    "blocks": [
+      {
+        "kind": "paragraph",
+        "text": "Waitlist formuna girdiğiniz e-posta adresi ve telefon numarası, HTLL ürünleri için kayıt/erken erişim talebinizi yönetmek ve bu talep hakkında sizi bilgilendirmek amacıyla kullanılır. Verilerinizle ilgili talepler için hightechlowlifestudios@gmail.com adresinden bize ulaşabilirsiniz."
+      }
+    ]
+  }
+]

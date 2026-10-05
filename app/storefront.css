@@ -1,0 +1,60 @@
+.storefront { background: #eeeDEA; color: #161616; }
+.storefront .site-header { position: relative; height: 94px; padding: 0 4%; border-color: #c8c7c3; font-size: 11px; letter-spacing: .08em; }
+.brand-wordmark { display: block; position: relative; width: 106px; height: 46px; overflow: hidden; }
+.brand-wordmark img { position: absolute; width: 116px; max-width: none; left: -5px; top: -33px; }
+.storefront .site-header nav { gap: 30px; }
+.storefront .bag-button { border: 1px solid #aaa9a5; padding: 12px 16px; }
+.storefront sup { font-size: 10px; vertical-align: baseline; margin-left: 8px; }
+.collection-line { padding: 18px 4%; display: flex; justify-content: space-between; gap: 16px; font: 10px/1.5 monospace; letter-spacing: .12em; }
+.storefront .product { min-height: 0; display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); margin: 0 4% 70px; border: 1px solid #cecdc9; background: #f8f7f4; scroll-margin-top: 20px; }
+.storefront .product-image-wrap { min-height: 0; height: auto; align-self: start; background: #e5e4e0; border: 0; overflow: hidden; }
+.storefront .pant-image { width: 100%; height: min(68vw, 680px); object-fit: contain; object-position: center; }
+.storefront .image-count { top: 20px; left: 20px; margin: 0; font: 11px monospace; background: #f8f7f4df; padding: 8px 10px; }
+.storefront .product-gallery { position: static; padding: 16px 20px; display: flex; flex-direction: row; justify-content: center; gap: 10px; max-width: 100%; overflow-x: auto; border-top: 1px solid #cecdc9; }
+.storefront .product-gallery button { flex: 0 0 54px; width: 54px; height: 66px; border: 1px solid #bdbcb8; opacity: .65; background: #f8f7f4; }
+.storefront .product-gallery button.selected { border: 1px solid #111; opacity: 1; }
+.storefront .product-gallery img { object-fit: contain; }
+.storefront .product-info { padding: clamp(28px, 4vw, 64px); border-left: 1px solid #cecdc9; min-width: 0; }
+.storefront .product-sticky { position: static; }
+.storefront .eyebrow { font: 10px/1.5 monospace; letter-spacing: .1em; color: #62615d; }
+.storefront .product h1 { margin: 26px 0 22px; font-family: Arial, Helvetica, sans-serif; font-size: clamp(26px, 3.2vw, 46px); font-weight: 600; line-height: 1.07; letter-spacing: -.045em; overflow-wrap: normal; word-break: normal; }
+.storefront .price { font-size: 18px; margin: 0 0 30px; letter-spacing: -.02em; }
+.storefront .description { font: 14px/1.8 Arial, sans-serif; color: #55544f; max-width: 410px; margin: 0 0 14px; }
+.patch-note { font: 10px/1.6 monospace; letter-spacing: .06em; padding: 10px 0; margin: 0 0 30px; }
+.storefront .size-picker { margin-bottom: 18px; }
+.storefront .size-picker legend { font-size: 10px; margin-bottom: 12px; }
+.storefront .size-picker div { display: flex; flex-wrap: wrap; gap: 8px; border: 0; }
+.storefront .size-picker button { min-width: 56px; height: 44px; padding: 0 14px; border: 1px solid #a5a49f; font-size: 12px; }
+.storefront .add-button { height: 56px; font-size: 11px; letter-spacing: .07em; }
+.storefront .product-notes { margin-top: 30px; }
+.storefront .product-notes summary { font-size: 11px; padding: 20px 0; letter-spacing: .07em; }
+.storefront .product-notes details p { max-width: none; font-size: 13px; line-height: 1.8; }
+.storefront footer { min-height: 0; padding: 48px 4% 24px; gap: 40px; background: #101010; color: #eeeDEA; }
+.brand-symbol { width: 150px; height: 60px; display: block; overflow: hidden; position: relative; }
+.brand-symbol img { position: absolute; width: 164px; max-width: none; top: -52px; left: -7px; mix-blend-mode: screen; }
+.storefront footer p { font: 10px/1.9 monospace; letter-spacing: .06em; margin-top: 20px; color: #aaa; }
+.storefront .footer-links { font-size: 10px; gap: 18px; letter-spacing: .04em; }
+.storefront .footer-legal { border-color: #353535; font: 10px/1.7 monospace; gap: 24px; }
+.storefront .store-policy-links { max-width: 850px; font-size: 10px; gap: 12px 22px; color: #bcbcb8; }
+.storefront .bag-drawer { background: #f8f7f4; }
+.storefront .bag-line { grid-template-columns: 72px minmax(0, 1fr); }
+.storefront .bag-line > img { width: 72px; height: 100px; object-fit: contain; }
+.storefront .bag-line > p { grid-column: 2; }
+.storefront .bag-line h2 { line-height: 1.5; }
+.storefront .drawer-total > p { font-size: 11px; line-height: 1.6; }
+.storefront button:focus-visible, .storefront a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
+@media (max-width: 760px) {
+ .storefront .site-header { height: 76px; padding: 0 20px; }
+ .brand-wordmark { transform: scale(.85); transform-origin: left center; }
+ .collection-line { padding: 16px 20px; font-size: 9px; }
+ .storefront .product { grid-template-columns: 1fr; margin: 0 16px 36px; }
+ .storefront .pant-image { height: auto; aspect-ratio: 1 / 1.12; max-height: 600px; }
+ .storefront .product-image-wrap { height: auto; max-height: none; }
+ .storefront .product-info { padding: 28px 22px 12px; border-left: 0; border-top: 1px solid #cecdc9; }
+ .storefront .product h1 { font-size: clamp(26px, 7vw, 40px); margin: 20px 0; }
+ .storefront .price { margin-bottom: 22px; }
+ .storefront footer { display: grid; grid-template-columns: 1fr; padding: 32px 24px 24px; gap: 28px; }
+ .storefront .footer-links { justify-self: start; margin: 0; text-align: left; }
+ .storefront .footer-legal { flex-direction: column; }
+ .storefront .store-policy-links { justify-content: flex-start; }
+}

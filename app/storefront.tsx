@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import type { ShopifyProduct, ShopifyVariant } from "./lib/shopify";
+import "./storefront.css";
 
 type CartLine = {
   id: string;
@@ -119,20 +120,15 @@ export function Storefront({ product }: { product: ShopifyProduct }) {
   }
 
   return (
-    <main>
+    <main className="storefront" id="top">
       <a className="skip-link" href="#pant">Ürüne geç</a>
       <header className="site-header">
-        <a className="wordmark" href="#top" aria-label="High Tech Low Life ana sayfa">HTLL</a>
-        <nav aria-label="Ana menü"><a href="#pant">Pantalon</a><a href="#details">Detaylar</a></nav>
+        <a className="brand-wordmark" href="#top" aria-label="High Tech Low Life ana sayfa"><img src="/brand/wordmark.png" alt="HTLL" /></a>
+        <nav aria-label="Ana menü"><a href="#pant">Drop 001</a><a href="/bilgi/hakkimizda">Hakkımızda</a><a href="/bilgi/iletisim">İletişim</a></nav>
         <button className="bag-button" onClick={() => setBagOpen(true)}>Sepet <sup>{cart?.totalQuantity ?? 0}</sup></button>
       </header>
 
-      <section className="artwork-hero" id="top" aria-label="High Tech Low Life Drop 001">
-        <img src="/hero-symbol.png" alt="Açık renk dokulu zeminde siyah üç uçlu sembol" />
-        <div className="hero-meta hero-meta-left">DROP 001<br />2026</div>
-        <div className="hero-meta hero-meta-right">TEK FORM<br />TEK EDİSYON</div>
-        <a className="scroll-cue" href="#pant">Ürünü gör <span>↓</span></a>
-      </section>
+      <div className="collection-line"><span>HIGH TECH LOW LIFE</span><span>DROP 001 / 2026</span></div>
 
       <section className="product" id="pant">
         <div className="product-image-wrap">
@@ -159,11 +155,12 @@ export function Storefront({ product }: { product: ShopifyProduct }) {
           <p className="eyebrow">High Tech Low Life / Drop 001</p>
           <h1>{product.title}</h1>
           {selectedVariant && <p className="price">{money(selectedVariant.price.amount, selectedVariant.price.currencyCode)}</p>}
-          <p className="description">{product.description || "Tek bir form. Gereksiz hiçbir şey yok."}</p>
+          <p className="description">14 oz denim. Eskitilmiş yıkama. Değiştirilebilir double-knee patch sistemiyle uyumlu base şort.</p>
+          <p className="patch-note">PATCH’LER AYRI SATILIR.</p>
 
           <fieldset className="size-picker">
             <legend>Beden seç</legend>
-            <div style={{ gridTemplateColumns: `repeat(${Math.max(product.variants.length, 1)}, 1fr)` }}>
+            <div>
               {product.variants.map((variant) => (
                 <button
                   key={variant.id}
@@ -187,18 +184,25 @@ export function Storefront({ product }: { product: ShopifyProduct }) {
           {cartError && <p className="cart-error" role="alert">{cartError}</p>}
 
           <div className="product-notes" id="details">
-            <details open><summary>Ürün bilgisi</summary><p>{product.description || "Ürün açıklaması yakında eklenecek."}</p></details>
-            <details><summary>Stok</summary><p>Stok ve beden bilgileri Shopify üzerinden canlı olarak güncellenir.</p></details>
-            <details><summary>Kargo ve iade</summary><p>Kargo ücretleri ve teslimat seçenekleri Shopify ödeme sayfasında hesaplanır.</p></details>
+            <details><summary>Ürün detayları</summary><p>{product.description || "Ürün açıklaması yakında eklenecek."}</p></details>
+            <details><summary>Kargo ve iade</summary><p>Türkiye içi gönderim. 4.000 TL ve üzeri siparişlerde ücretsiz kargo. Ön sipariş süresi ayrıca belirtilmediyse 7 iş günü içinde kargoya teslim edilir. Teslimattan itibaren 14 gün içinde cayma hakkı. <a href="/bilgi/teslimat-ve-kargo">Teslimat koşulları</a> · <a href="/bilgi/iptal-cayma-ve-iade">İade koşulları</a></p></details>
           </div>
         </div></div>
       </section>
 
-      <section className="statement"><img src="/hero-symbol.png" alt="" aria-hidden="true" /><p>Tek ürün.<br />Gereksiz hiçbir şey yok.</p></section>
       <footer>
-        <div><a className="footer-mark" href="#top">HTLL</a><p>High Tech Low Life Studios.<br />İstanbul</p></div>
-        <div className="footer-links"><a href="#pant">Ürün</a><a href="#details">Beden</a><a href="https://www.instagram.com/htll.studios/" target="_blank" rel="noreferrer">Instagram @htll.studios</a></div>
-        <div className="footer-legal"><span>© 2026 HTLL</span><span>Koşullar · Gizlilik</span></div>
+        <div className="footer-identity"><a className="brand-symbol" href="#top" aria-label="HTLL ana sayfa"><img src="/brand/symbol-white.png" alt="" /></a><p>HIGH TECH LOW LIFE STUDIOS<br />Independent clothing. İstanbul.</p></div>
+        <div className="footer-links"><a href="#pant">Koleksiyonu keşfet ↗</a><a href="mailto:hightechlowlifestudios@gmail.com">Bize ulaşın ↗</a><a href="https://www.instagram.com/htll.studios/" target="_blank" rel="noreferrer">Instagram @htll.studios ↗</a></div>
+        <div className="footer-legal"><span>© 2026 HTLL</span><nav className="store-policy-links" aria-label="Yasal bilgiler">
+          <a href="/bilgi/hakkimizda">Hakkımızda</a>
+          <a href="/bilgi/iletisim">İletişim</a>
+          <a href="/bilgi/teslimat-ve-kargo">Teslimat ve Kargo</a>
+          <a href="/bilgi/iptal-cayma-ve-iade">İptal, Cayma ve İade</a>
+          <a href="/bilgi/on-bilgilendirme">Ön Bilgilendirme</a>
+          <a href="/bilgi/mesafeli-satis-sozlesmesi">Mesafeli Satış Sözleşmesi</a>
+          <a href="/bilgi/gizlilik">Gizlilik ve Kişisel Veriler</a>
+          <a href="/bilgi/waitlist-bilgilendirmesi">Waitlist Bilgilendirmesi</a>
+        </nav></div>
       </footer>
 
       <div className={`overlay ${bagOpen ? "visible" : ""}`} onClick={() => setBagOpen(false)} />
@@ -214,11 +218,12 @@ export function Storefront({ product }: { product: ShopifyProduct }) {
             <div className="drawer-total">
               <div><span>Ara toplam</span><span>{money(cart.cost.subtotalAmount.amount, cart.cost.subtotalAmount.currencyCode)}</span></div>
               <button onClick={() => window.location.assign(cart.checkoutUrl)}>Ödemeye devam et</button>
+              <p className="checkout-policy-links"><a href="/bilgi/on-bilgilendirme" target="_blank" rel="noopener noreferrer">Ön Bilgilendirme</a> · <a href="/bilgi/mesafeli-satis-sozlesmesi" target="_blank" rel="noopener noreferrer">Mesafeli Satış Sözleşmesi</a></p>
               <p>Güvenli ödeme Shopify üzerinden tamamlanır.</p>
             </div>
           </>
         ) : (
-          <div className="empty-bag"><p>Sepetiniz boş.</p><button onClick={() => { setBagOpen(false); document.querySelector("#pant")?.scrollIntoView(); }}>Pantalonu gör</button></div>
+          <div className="empty-bag"><p>Sepetiniz boş.</p><button onClick={() => { setBagOpen(false); document.querySelector("#pant")?.scrollIntoView(); }}>Ürünü gör</button></div>
         )}
       </aside>
     </main>
