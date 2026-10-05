@@ -42,12 +42,18 @@ export function Storefront({ product }: { product: ShopifyProduct }) {
   const [cart, setCart] = useState<Cart | null>(null);
   const [loading, setLoading] = useState(false);
   const [cartError, setCartError] = useState("");
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const selectedVariant = useMemo(
     () => product.variants.find((variant) => variant.id === selectedVariantId) ?? firstAvailable,
     [firstAvailable, product.variants, selectedVariantId],
   );
   const currentLine = cart?.lines.nodes[0] ?? null;
-  const productImage = product.featuredImage ?? product.images[0] ?? null;
+  const productImages = product.images.length > 0
+    ? product.images
+    : product.featuredImage
+      ? [product.featuredImage]
+      : [];
+  const productImage = productImages[selectedImageIndex] ?? productImages[0] ?? null;
 
   useEffect(() => {
     document.body.style.overflow = bagOpen ? "hidden" : "";
@@ -130,8 +136,24 @@ export function Storefront({ product }: { product: ShopifyProduct }) {
 
       <section className="product" id="pant">
         <div className="product-image-wrap">
-          <p className="image-count">01 / {String(Math.max(product.images.length, 1)).padStart(2, "0")}</p>
+          <p className="image-count">{String(selectedImageIndex + 1).padStart(2, "0")} / {String(Math.max(productImages.length, 1)).padStart(2, "0")}</p>
           <img className="pant-image" src={productImage?.url ?? "/pant-product.png"} alt={productImage?.altText ?? product.title} />
+          {productImages.length > 1 && (
+            <div className="product-gallery" aria-label={`${product.title} görselleri`}>
+              {productImages.map((image, index) => (
+                <button
+                  key={image.url}
+                  type="button"
+                  className={selectedImageIndex === index ? "selected" : ""}
+                  onClick={() => setSelectedImageIndex(index)}
+                  aria-label={`${product.title}, görsel ${index + 1}`}
+                  aria-pressed={selectedImageIndex === index}
+                >
+                  <img src={image.url} alt="" />
+                </button>
+              ))}
+            </div>
+          )}
         </div>
         <div className="product-info"><div className="product-sticky">
           <p className="eyebrow">High Tech Low Life / Drop 001</p>
@@ -175,7 +197,7 @@ export function Storefront({ product }: { product: ShopifyProduct }) {
       <section className="statement"><img src="/hero-symbol.png" alt="" aria-hidden="true" /><p>Tek ürün.<br />Gereksiz hiçbir şey yok.</p></section>
       <footer>
         <div><a className="footer-mark" href="#top">HTLL</a><p>High Tech Low Life Studios.<br />İstanbul</p></div>
-        <div className="footer-links"><a href="#pant">Ürün</a><a href="#details">Beden</a><a href="#top">Instagram</a></div>
+        <div className="footer-links"><a href="#pant">Ürün</a><a href="#details">Beden</a><a href="https://www.instagram.com/htll.studios/" target="_blank" rel="noreferrer">Instagram @htll.studios</a></div>
         <div className="footer-legal"><span>© 2026 HTLL</span><span>Koşullar · Gizlilik</span></div>
       </footer>
 
