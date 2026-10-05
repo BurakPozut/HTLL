@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import Link from "next/link";
 import type { ShopifyProduct, ShopifyVariant } from "./lib/shopify";
 import "./storefront.css";
 
@@ -124,8 +125,8 @@ export function Storefront({ product }: { product: ShopifyProduct }) {
       <a className="skip-link" href="#pant">Ürüne geç</a>
       <header className="site-header">
         <a className="brand-wordmark" href="#top" aria-label="High Tech Low Life ana sayfa"><img src="/brand/wordmark.png" alt="HTLL" /></a>
-        <nav aria-label="Ana menü"><a href="#pant">Drop 001</a><a href="/bilgi/hakkimizda">Hakkımızda</a><a href="/bilgi/iletisim">İletişim</a></nav>
-        <button className="bag-button" onClick={() => setBagOpen(true)}>Sepet <sup>{cart?.totalQuantity ?? 0}</sup></button>
+        <nav aria-label="Ana menü"><a href="#pant">Drop 001</a><Link href="/bilgi/hakkimizda">Hakkımızda</Link><Link href="/bilgi/iletisim">İletişim</Link></nav>
+        <button className="bag-button" onClick={() => setBagOpen(true)}>Sepet <span className="bag-count">{cart?.totalQuantity ?? 0}</span></button>
       </header>
 
       <div className="collection-line"><span>HIGH TECH LOW LIFE</span><span>DROP 001 / 2026</span></div>
@@ -185,7 +186,7 @@ export function Storefront({ product }: { product: ShopifyProduct }) {
 
           <div className="product-notes" id="details">
             <details><summary>Ürün detayları</summary><p>{product.description || "Ürün açıklaması yakında eklenecek."}</p></details>
-            <details><summary>Kargo ve iade</summary><p>Türkiye içi gönderim. 4.000 TL ve üzeri siparişlerde ücretsiz kargo. Ön sipariş süresi ayrıca belirtilmediyse 7 iş günü içinde kargoya teslim edilir. Teslimattan itibaren 14 gün içinde cayma hakkı. <a href="/bilgi/teslimat-ve-kargo">Teslimat koşulları</a> · <a href="/bilgi/iptal-cayma-ve-iade">İade koşulları</a></p></details>
+            <details><summary>Kargo ve iade</summary><p>Türkiye içi gönderim. 4.000 TL ve üzeri siparişlerde ücretsiz kargo. Ön sipariş süresi ayrıca belirtilmediyse 7 iş günü içinde kargoya teslim edilir. Teslimattan itibaren 14 gün içinde cayma hakkı. <Link href="/bilgi/teslimat-ve-kargo">Teslimat koşulları</Link> · <Link href="/bilgi/iptal-cayma-ve-iade">İade koşulları</Link></p></details>
           </div>
         </div></div>
       </section>
@@ -194,14 +195,14 @@ export function Storefront({ product }: { product: ShopifyProduct }) {
         <div className="footer-identity"><a className="brand-symbol" href="#top" aria-label="HTLL ana sayfa"><img src="/brand/symbol-white.png" alt="" /></a><p>HIGH TECH LOW LIFE STUDIOS<br />Independent clothing. İstanbul.</p></div>
         <div className="footer-links"><a href="#pant">Koleksiyonu keşfet ↗</a><a href="mailto:hightechlowlifestudios@gmail.com">Bize ulaşın ↗</a><a href="https://www.instagram.com/htll.studios/" target="_blank" rel="noreferrer">Instagram @htll.studios ↗</a></div>
         <div className="footer-legal"><span>© 2026 HTLL</span><nav className="store-policy-links" aria-label="Yasal bilgiler">
-          <a href="/bilgi/hakkimizda">Hakkımızda</a>
-          <a href="/bilgi/iletisim">İletişim</a>
-          <a href="/bilgi/teslimat-ve-kargo">Teslimat ve Kargo</a>
-          <a href="/bilgi/iptal-cayma-ve-iade">İptal, Cayma ve İade</a>
-          <a href="/bilgi/on-bilgilendirme">Ön Bilgilendirme</a>
-          <a href="/bilgi/mesafeli-satis-sozlesmesi">Mesafeli Satış Sözleşmesi</a>
-          <a href="/bilgi/gizlilik">Gizlilik ve Kişisel Veriler</a>
-          <a href="/bilgi/waitlist-bilgilendirmesi">Waitlist Bilgilendirmesi</a>
+          <Link href="/bilgi/hakkimizda">Hakkımızda</Link>
+          <Link href="/bilgi/iletisim">İletişim</Link>
+          <Link href="/bilgi/teslimat-ve-kargo">Teslimat ve Kargo</Link>
+          <Link href="/bilgi/iptal-cayma-ve-iade">İptal, Cayma ve İade</Link>
+          <Link href="/bilgi/on-bilgilendirme">Ön Bilgilendirme</Link>
+          <Link href="/bilgi/mesafeli-satis-sozlesmesi">Mesafeli Satış Sözleşmesi</Link>
+          <Link href="/bilgi/gizlilik">Gizlilik ve Kişisel Veriler</Link>
+          <Link href="/bilgi/waitlist-bilgilendirmesi">Waitlist Bilgilendirmesi</Link>
         </nav></div>
       </footer>
 
@@ -218,7 +219,7 @@ export function Storefront({ product }: { product: ShopifyProduct }) {
             <div className="drawer-total">
               <div><span>Ara toplam</span><span>{money(cart.cost.subtotalAmount.amount, cart.cost.subtotalAmount.currencyCode)}</span></div>
               <button onClick={() => window.location.assign(cart.checkoutUrl)}>Ödemeye devam et</button>
-              <p className="checkout-policy-links"><a href="/bilgi/on-bilgilendirme" target="_blank" rel="noopener noreferrer">Ön Bilgilendirme</a> · <a href="/bilgi/mesafeli-satis-sozlesmesi" target="_blank" rel="noopener noreferrer">Mesafeli Satış Sözleşmesi</a></p>
+              <p className="checkout-policy-links"><Link href="/bilgi/on-bilgilendirme" target="_blank" rel="noopener noreferrer">Ön Bilgilendirme</Link> · <Link href="/bilgi/mesafeli-satis-sozlesmesi" target="_blank" rel="noopener noreferrer">Mesafeli Satış Sözleşmesi</Link></p>
               <p>Güvenli ödeme Shopify üzerinden tamamlanır.</p>
             </div>
           </>

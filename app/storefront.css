@@ -3,16 +3,16 @@
 .brand-wordmark { display: block; position: relative; width: 106px; height: 46px; overflow: hidden; }
 .brand-wordmark img { position: absolute; width: 116px; max-width: none; left: -5px; top: -33px; }
 .storefront .site-header nav { gap: 30px; }
-.storefront .bag-button { border: 1px solid #aaa9a5; padding: 12px 16px; }
-.storefront sup { font-size: 10px; vertical-align: baseline; margin-left: 8px; }
+.storefront .bag-button { display: inline-flex; align-items: center; gap: 8px; border: 1px solid #aaa9a5; padding: 12px 16px; }
+.storefront .bag-count { font-size: 10px; line-height: 1; }
 .collection-line { padding: 18px 4%; display: flex; justify-content: space-between; gap: 16px; font: 10px/1.5 monospace; letter-spacing: .12em; }
 .storefront .product { min-height: 0; display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); margin: 0 4% 70px; border: 1px solid #cecdc9; background: #f8f7f4; scroll-margin-top: 20px; }
-.storefront .product-image-wrap { min-height: 0; height: auto; align-self: start; background: #e5e4e0; border: 0; overflow: hidden; }
+.storefront .product-image-wrap { min-height: 0; height: auto; align-self: stretch; background: #000; border: 0; overflow: hidden; }
 .storefront .pant-image { width: 100%; height: min(68vw, 680px); object-fit: contain; object-position: center; }
-.storefront .image-count { top: 20px; left: 20px; margin: 0; font: 11px monospace; background: #f8f7f4df; padding: 8px 10px; }
-.storefront .product-gallery { position: static; padding: 16px 20px; display: flex; flex-direction: row; justify-content: center; gap: 10px; max-width: 100%; overflow-x: auto; border-top: 1px solid #cecdc9; }
-.storefront .product-gallery button { flex: 0 0 54px; width: 54px; height: 66px; border: 1px solid #bdbcb8; opacity: .65; background: #f8f7f4; }
-.storefront .product-gallery button.selected { border: 1px solid #111; opacity: 1; }
+.storefront .image-count { top: 20px; left: 20px; margin: 0; font: 11px monospace; color: #f8f7f4; background: #000; padding: 8px 10px; }
+.storefront .product-gallery { position: static; padding: 16px 20px; display: flex; flex-direction: row; justify-content: center; gap: 10px; max-width: 100%; overflow-x: auto; border-top: 1px solid #282828; }
+.storefront .product-gallery button { flex: 0 0 54px; width: 54px; height: 66px; border: 1px solid #444; opacity: .72; background: #000; }
+.storefront .product-gallery button.selected { border: 1px solid #f8f7f4; opacity: 1; }
 .storefront .product-gallery img { object-fit: contain; }
 .storefront .product-info { padding: clamp(28px, 4vw, 64px); border-left: 1px solid #cecdc9; min-width: 0; }
 .storefront .product-sticky { position: static; }
